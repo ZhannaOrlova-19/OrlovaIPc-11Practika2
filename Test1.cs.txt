@@ -1,0 +1,181 @@
+using MCLibrary;
+
+namespace TestLib
+{
+	[TestClass]
+	public sealed class Test1
+	{
+		[TestMethod]
+		public void Calculate_Sum_10and20_returned30()
+		{
+			double num1 = 10, num2 = 20;
+			string expression = $"{num1}+{num2}";
+			double expected = 30;
+
+			CalcLibrary calc = new CalcLibrary();
+			double actual = calc.Calculate(expression);
+
+			Assert.AreEqual(expected, actual);
+		}
+
+		[TestMethod]
+		public void Calculate_Subtract_30and20_returned10()
+		{
+			double num1 = 30, num2 = 20;
+			string expression = $"{num1}-{num2}";
+			double expected = 10;
+
+			CalcLibrary calc = new CalcLibrary();
+			double actual = calc.Calculate(expression);
+
+			Assert.AreEqual(expected, actual);
+		}
+
+		[TestMethod]
+		public void Calculate_Multiplication_10and2_returned20()
+		{
+			double num1 = 10, num2 = 2;
+			string expression = $"{num1}*{num2}";
+			double expected = 20;
+
+			CalcLibrary calc = new CalcLibrary();
+			double actual = calc.Calculate(expression);
+
+			Assert.AreEqual(expected, actual);
+		}
+
+		[TestMethod]
+		public void Calculate_Division_20and2_returned10()
+		{
+			double num1 = 20, num2 = 2;
+			string expression = $"{num1}/{num2}";
+			double expected = 10;
+
+			CalcLibrary calc = new CalcLibrary();
+			double actual = calc.Calculate(expression);
+
+			Assert.AreEqual(expected, actual);
+		}
+
+		[TestMethod]
+		public void Calculate_Exponentiation_5and2_returned25()
+		{
+			double num1 = 5, num2 = 2;
+			string expression = $"{num1}^{num2}";
+			double expected = 25;
+
+			CalcLibrary calc = new CalcLibrary();
+			double actual = calc.Calculate(expression);
+
+			Assert.AreEqual(expected, actual);
+		}
+
+		[TestMethod]
+		public void Calculate_Division_ByZero_ThrowsException()
+		{
+			string expression = "20/0";
+
+			CalcLibrary calc = new CalcLibrary();
+
+			Assert.ThrowsException<DivideByZeroException>(() => calc.Calculate(expression));
+		}
+
+		[TestMethod]
+		public void Calculate_ComplexExpression_ReturnsCorrectResult()
+		{
+			string expression = "2+3*4";
+			double expected = 14; // 2 + (3*4) = 14
+
+			CalcLibrary calc = new CalcLibrary();
+			double actual = calc.Calculate(expression);
+
+			Assert.AreEqual(expected, actual);
+		}
+
+		[TestMethod]
+		public void Calculate_ComplexExpressionWithPower_ReturnsCorrectResult()
+		{
+			string expression = "2+3^2*4";
+			double expected = 38; // 2 + (9*4) = 38
+
+			CalcLibrary calc = new CalcLibrary();
+			double actual = calc.Calculate(expression);
+
+			Assert.AreEqual(expected, actual);
+		}
+
+		[TestMethod]
+		public void Calculate_NegativeNumbers_ReturnsCorrectResult()
+		{
+			string expression = "-5+3";
+			double expected = -2;
+
+			CalcLibrary calc = new CalcLibrary();
+			double actual = calc.Calculate(expression);
+
+			Assert.AreEqual(expected, actual);
+		}
+
+		[TestMethod]
+		public void Calculate_DecimalNumbers_ReturnsCorrectResult()
+		{
+			string expression = "10.5+5.5";
+			double expected = 16;
+
+			CalcLibrary calc = new CalcLibrary();
+			double actual = calc.Calculate(expression);
+
+			Assert.AreEqual(expected, actual);
+		}
+
+		[TestMethod]
+		public void Calculate_WithSpaces_ReturnsCorrectResult()
+		{
+			string expression = "10 + 20 * 2";
+			double expected = 50; // 10 + (20*2) = 50
+
+			CalcLibrary calc = new CalcLibrary();
+			double actual = calc.Calculate(expression);
+
+			Assert.AreEqual(expected, actual);
+		}
+
+		[TestMethod]
+		public void Calculate_EmptyString_ReturnsZero()
+		{
+			string expression = "";
+
+			CalcLibrary calc = new CalcLibrary();
+			double actual = calc.Calculate(expression);
+
+			Assert.AreEqual(0, actual);
+		}
+
+		[TestMethod]
+		public void Calculate_PowerPriority_ReturnsCorrectResult()
+		{
+			string expression = "2^3*2";
+			double expected = 16; // (2^3)*2 = 8*2 = 16
+
+			CalcLibrary calc = new CalcLibrary();
+			double actual = calc.Calculate(expression);
+
+			Assert.AreEqual(expected, actual);
+		}
+
+		[TestMethod]
+		public void Calculate_AllOperations_ReturnsCorrectResult()
+		{
+			string expression = "10+5*2-8/4^2";
+			// 10 + (5*2) - (8/(4^2))
+			// 10 + 10 - (8/16)
+			// 20 - 0.5 = 19.5
+			double expected = 19.5;
+
+			CalcLibrary calc = new CalcLibrary();
+			double actual = calc.Calculate(expression);
+
+			Assert.AreEqual(expected, actual, 0.0001); // С указанной точностью
+		}
+	}
+}

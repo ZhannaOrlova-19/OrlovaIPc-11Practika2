@@ -1,0 +1,57 @@
+using System;
+
+namespace MCLibrary
+{
+	public class CalcLibrary
+	{
+		public double Sum(double num1, double num2)
+		{
+			return num1 + num2;
+		}
+		public double Subtraction(double num1, double num2)
+		{
+			return num1 - num2;
+		}
+		public double Multiplication(double num1, double num2)
+		{
+			return num1 * num2;
+		}
+		public double Division(double num1, double num2)
+		{
+			if (num2 == 0)
+			{
+				throw new DivideByZeroException("Деление на ноль недопустимо!");
+			}
+			return num1 / num2;
+		}
+		public double Exponentiation(double num1, double num2)
+		{
+			return Math.Pow(num1, num2);
+		}
+
+		public static double Sum(string v)
+		{
+			throw new NotImplementedException();
+		}
+
+		public static double Subtraction(string v)
+		{
+			throw new NotImplementedException();
+		}
+
+		public static double Multiplication(string v)
+		{
+			throw new NotImplementedException();
+		}
+
+		public static double Division(string v)
+		{
+			throw new NotImplementedException();
+		}
+
+		public static double Exponentiation(string v)
+		{
+			throw new NotImplementedException();
+		}
+	}
+}

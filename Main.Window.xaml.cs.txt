@@ -1,0 +1,116 @@
+using System;
+using System.Windows;
+using System.Windows.Controls;
+using MCLibrary;
+
+namespace Orlova
+{
+
+	public partial class MainWindow : Window
+	{
+		private CalcLibrary _calculator;
+		double num1 = 0, num2 = 0;
+		string sign = "";
+		bool newthing = true;
+
+		public MainWindow()
+		{
+			InitializeComponent();
+			_calculator = new CalcLibrary();
+		}
+		private void Button_Click(object sender, RoutedEventArgs e)
+		{
+			Button btn = (Button)sender;
+			string num = btn.Content.ToString();
+
+			if (newthing)
+			{
+				Display.Text = num;
+				newthing = false;
+			}
+			else
+			{
+				if (Display.Text == "0")
+					Display.Text = num;
+				else
+					Display.Text += num;
+			}
+		}
+
+		private void Operation_Click(object sender, RoutedEventArgs e)
+		{
+			Button btn = (Button)sender;
+			sign = btn.Content.ToString();
+			num1 = double.Parse(Display.Text);
+			newthing = true;
+		}
+
+		private void Point_Click(object sender, RoutedEventArgs e)
+		{
+			if (!Display.Text.Contains(","))
+				Display.Text += ",";
+		}
+		private void Equals_Click(object sender, RoutedEventArgs e)
+		{
+			try
+			{
+				num2 = double.Parse(Display.Text);
+				double result = 0;
+
+				switch (sign)
+				{
+					case "+":
+						result = _calculator.Sum(num1, num2);
+						break;
+					case "-":
+						result = _calculator.Subtraction(num1, num2);
+						break;
+					case "*":
+						result = _calculator.Multiplication(num1, num2);
+						break;
+					case "/":
+						result = _calculator.Division(num1, num2);
+						break;
+					case "^":
+						result = _calculator.Exponentiation(num1, num2);
+						break;
+					default:
+						Display.Text = "Неизвестная операция";
+						return;
+				}
+
+				Display.Text = result.ToString();
+				newthing = true;
+				sign = "";
+			}
+			catch (DivideByZeroException)
+			{
+				Display.Text = "Ошибка: деление на ноль";
+				num1 = 0; num2 = 0;
+				sign = "";
+				newthing = true;
+			}
+			catch (Exception)
+			{
+				Display.Text = "Ошибка";
+				num1 = 0; num2 = 0;
+				sign = "";
+				newthing = true;
+			}
+		}
+
+		private void Clear_Click(object sender, RoutedEventArgs e)
+		{
+			Display.Text = "0";
+			num1 = 0; num2 = 0;
+			sign = "";
+			newthing = true;
+		}
+
+		private void Sign_Click(object sender, RoutedEventArgs e)
+		{
+			double z = double.Parse(Display.Text);
+			Display.Text = (-z).ToString();
+		}
+	}
+}
